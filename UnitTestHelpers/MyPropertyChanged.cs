@@ -1,0 +1,46 @@
+﻿using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+
+namespace UnitTestHelpers
+{
+    public class MyPropertyChanged : INotifyPropertyChanged
+    {
+        private readonly IDataService _dataService;
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public MyPropertyChanged(IDataService dataService)
+        {
+            if (dataService == null) throw new ArgumentNullException(nameof(dataService));
+            _dataService = dataService;
+        }
+
+        private bool _isLoading;
+        public bool IsLoading
+        {
+            get { return _isLoading; }
+            set
+            {
+                if (_isLoading != value)
+                {
+                    _isLoading = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public async Task LoadDataAsync()
+        {
+            IsLoading = true;
+            var data = await _dataService.LoadData();
+            //TODO: use data
+            IsLoading = false;
+        }
+
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+}

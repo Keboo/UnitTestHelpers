@@ -38,13 +38,12 @@ namespace UnitTestHelpers.Tests
             var array = Expression.NewArrayInit(typeof(object), convertedParams);
             var methodInvoke = Expression.Call(instance, eventInvokedMethod, array);
             var eventHandler = Expression.Lambda(eventInfo.EventHandlerType, methodInvoke, parameters);
-            //This expression is roughly equivellent to:
+            //This expression is roughly equivalent to:
             //event += (p1, p2, ..., pn) => rv.EventInvoked(new[] {(object)p1, (object)p2, ..., (object)pn});
             eventInfo.AddEventHandler(source, eventHandler.Compile());
 
             return rv;
         }
-
 
         public class Event
         {

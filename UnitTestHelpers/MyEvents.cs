@@ -5,8 +5,6 @@ namespace UnitTestHelpers
 {
     public class MyEvents
     {
-        public delegate void CustomDelegate(int @int, bool @bool);
-
         public event EventHandler EventHandler;
         public void RaiseEventHandler(object sender, EventArgs e)
         {
@@ -19,6 +17,7 @@ namespace UnitTestHelpers
             EventWithArgs?.Invoke(sender, e);
         }
 
+        public delegate void CustomDelegate( int @int, bool @bool );
         public event CustomDelegate CustomEvent;
         public void RaiseCustomEvent(int @int, bool @bool)
         {
@@ -36,7 +35,5 @@ namespace UnitTestHelpers
         {
             StaticEvent?.Invoke(sender, e);
         }
-
-
     }
 }

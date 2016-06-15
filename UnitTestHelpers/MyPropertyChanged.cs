@@ -30,6 +30,11 @@ namespace UnitTestHelpers
             }
         }
 
+        public async void Load()
+        {
+            await LoadDataAsync();
+        }
+
         public async Task LoadDataAsync()
         {
             IsLoading = true;

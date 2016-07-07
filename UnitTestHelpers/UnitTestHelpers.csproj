@@ -41,7 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IDataService.cs" />
-    <Compile Include="MyPropertyChanged.cs" />
+    <Compile Include="ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MyEvents.cs" />
   </ItemGroup>

@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace UnitTestHelpers
 {
-    public class MyPropertyChanged : INotifyPropertyChanged
+    public class ViewModel : INotifyPropertyChanged
     {
         private readonly IDataService _dataService;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public MyPropertyChanged(IDataService dataService)
+        public ViewModel(IDataService dataService)
         {
             if (dataService == null) throw new ArgumentNullException(nameof(dataService));
             _dataService = dataService;

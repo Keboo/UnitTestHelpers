@@ -29,7 +29,7 @@ namespace UnitTestHelpers.Tests
             {
                 _propertyName = propertyName;
 
-                var flags = BindingFlags.Instance | BindingFlags.GetProperty | BindingFlags.Public;
+                const BindingFlags flags = BindingFlags.Instance | BindingFlags.GetProperty | BindingFlags.Public;
                 var propertyInfo = propertyChanged.GetType().GetProperty(propertyName, flags);
                 if (propertyInfo == null) throw new ArgumentException($"Could not find public propert getter for {propertyName} on {propertyChanged.GetType().FullName}");
 

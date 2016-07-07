@@ -9,15 +9,15 @@ using Moq;
 namespace UnitTestHelpers.Tests
 {
     [TestClass]
-    public class MyPropertyChangedTests
+    public class PropertyChangedTests
     {
         [TestMethod]
         public async Task WatchIsLoading()
         {
             //Arrange
             var dataService = new Mock<IDataService>();
-            var viewModel = new MyPropertyChanged( dataService.Object );
-            var isLoadingChanges = viewModel.WatchPropertyChanges<bool>( nameof( MyPropertyChanged.IsLoading ) );
+            var viewModel = new ViewModel( dataService.Object );
+            var isLoadingChanges = viewModel.WatchPropertyChanges<bool>( nameof( ViewModel.IsLoading ) );
 
             //Act
             await viewModel.LoadDataAsync();
@@ -33,8 +33,8 @@ namespace UnitTestHelpers.Tests
             var dataService = new Mock<IDataService>();
             dataService.Setup( x => x.LoadData() )
                 .Returns( GetSlowTask<IEnumerable<string>>() );
-            var viewModel = new MyPropertyChanged( dataService.Object );
-            var isLoadingChanges = viewModel.WatchPropertyChanges<bool>( nameof( MyPropertyChanged.IsLoading ) );
+            var viewModel = new ViewModel( dataService.Object );
+            var isLoadingChanges = viewModel.WatchPropertyChanges<bool>( nameof( ViewModel.IsLoading ) );
             WaitHandle waitHandle = isLoadingChanges.WaitForChange();
 
             //Act
@@ -52,8 +52,8 @@ namespace UnitTestHelpers.Tests
             var dataService = new Mock<IDataService>();
             dataService.Setup( x => x.LoadData() )
                 .Returns( GetSlowTask<IEnumerable<string>>() );
-            var viewModel = new MyPropertyChanged( dataService.Object );
-            var isLoadingChanges = viewModel.WatchPropertyChanges<bool>( nameof( MyPropertyChanged.IsLoading ) );
+            var viewModel = new ViewModel( dataService.Object );
+            var isLoadingChanges = viewModel.WatchPropertyChanges<bool>( nameof( ViewModel.IsLoading ) );
             WaitHandle waitHandle = isLoadingChanges.WaitFor( x => x == false );
 
             //Act

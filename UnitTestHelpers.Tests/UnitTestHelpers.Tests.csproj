@@ -56,7 +56,7 @@
   <ItemGroup>
     <Compile Include="EventHelper.cs" />
     <Compile Include="MyEventsTests.cs" />
-    <Compile Include="MyPropertyChangedTests.cs" />
+    <Compile Include="PropertyChangedTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyChangedHelper.cs" />
   </ItemGroup>

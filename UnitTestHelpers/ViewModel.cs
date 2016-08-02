@@ -10,9 +10,9 @@ namespace UnitTestHelpers
         private readonly IDataService _dataService;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ViewModel(IDataService dataService)
+        public ViewModel( IDataService dataService )
         {
-            if (dataService == null) throw new ArgumentNullException(nameof(dataService));
+            if ( dataService == null ) throw new ArgumentNullException( nameof( dataService ) );
             _dataService = dataService;
         }
 
@@ -22,7 +22,7 @@ namespace UnitTestHelpers
             get { return _isLoading; }
             set
             {
-                if (_isLoading != value)
+                if ( _isLoading != value )
                 {
                     _isLoading = value;
                     OnPropertyChanged();
@@ -43,9 +43,9 @@ namespace UnitTestHelpers
             IsLoading = false;
         }
 
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void OnPropertyChanged( [CallerMemberName] string propertyName = null )
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
         }
     }
 }

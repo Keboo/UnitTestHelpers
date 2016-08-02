@@ -10,12 +10,12 @@ namespace UnitTestHelpers.Tests
 {
     public static class PropertyChangedHelper
     {
-        public static IPropertyChanges<T> WatchPropertyChanges<T>(this INotifyPropertyChanged propertyChanged, string propertyName)
+        public static IPropertyChanges<T> WatchPropertyChanges<T>( this INotifyPropertyChanged propertyChanged, string propertyName )
         {
-            if (propertyChanged == null) throw new ArgumentNullException(nameof(propertyChanged));
-            if (propertyName == null) throw new ArgumentNullException(nameof(propertyName));
+            if ( propertyChanged == null ) throw new ArgumentNullException( nameof( propertyChanged ) );
+            if ( propertyName == null ) throw new ArgumentNullException( nameof( propertyName ) );
 
-            return new PropertyChangedEnumerable<T>(propertyChanged, propertyName);
+            return new PropertyChangedEnumerable<T>( propertyChanged, propertyName );
         }
 
         private class PropertyChangedEnumerable<T> : IPropertyChanges<T>
@@ -25,31 +25,31 @@ namespace UnitTestHelpers.Tests
             private readonly string _propertyName;
             private readonly List<Tuple<Func<T, bool>, EventWaitHandle>> _WaitHandles = new List<Tuple<Func<T, bool>, EventWaitHandle>>();
 
-            public PropertyChangedEnumerable(INotifyPropertyChanged propertyChanged, string propertyName)
+            public PropertyChangedEnumerable( INotifyPropertyChanged propertyChanged, string propertyName )
             {
                 _propertyName = propertyName;
 
                 const BindingFlags flags = BindingFlags.Instance | BindingFlags.GetProperty | BindingFlags.Public;
-                var propertyInfo = propertyChanged.GetType().GetProperty(propertyName, flags);
-                if (propertyInfo == null) throw new ArgumentException($"Could not find public propert getter for {propertyName} on {propertyChanged.GetType().FullName}");
+                var propertyInfo = propertyChanged.GetType().GetProperty( propertyName, flags );
+                if ( propertyInfo == null ) throw new ArgumentException( $"Could not find public property getter for {propertyName} on {propertyChanged.GetType().FullName}" );
 
-                var instance = Expression.Constant(propertyChanged);
-                var propertyExpression = Expression.Property(instance, propertyInfo);
-                _getPropertyValue = Expression.Lambda<Func<T>>(propertyExpression).Compile();
+                var instance = Expression.Constant( propertyChanged );
+                var propertyExpression = Expression.Property( instance, propertyInfo );
+                _getPropertyValue = Expression.Lambda<Func<T>>( propertyExpression ).Compile();
 
                 propertyChanged.PropertyChanged += OnPropertyChanged;
             }
 
-            private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+            private void OnPropertyChanged( object sender, PropertyChangedEventArgs e )
             {
-                if (string.Equals(_propertyName, e.PropertyName, StringComparison.Ordinal))
+                if ( string.Equals( _propertyName, e.PropertyName, StringComparison.Ordinal ) )
                 {
                     var value = _getPropertyValue();
-                    _values.Add(value);
-                    _WaitHandles.ForEach(t =>
-                    {
-                        if (t.Item1(value)) t.Item2.Set();
-                    });
+                    _values.Add( value );
+                    _WaitHandles.ForEach( t =>
+                        {
+                            if ( t.Item1( value ) ) t.Item2.Set();
+                        } );
                 }
             }
 
@@ -65,13 +65,13 @@ namespace UnitTestHelpers.Tests
 
             public WaitHandle WaitForChange()
             {
-                return WaitFor(x => true);
+                return WaitFor( x => true );
             }
 
-            public WaitHandle WaitFor(Func<T, bool> predicate)
+            public WaitHandle WaitFor( Func<T, bool> predicate )
             {
-                EventWaitHandle mre = new ManualResetEvent(false);
-                _WaitHandles.Add(Tuple.Create(predicate, mre));
+                EventWaitHandle mre = new ManualResetEvent( false );
+                _WaitHandles.Add( Tuple.Create( predicate, mre ) );
                 return mre;
             }
         }
@@ -80,6 +80,6 @@ namespace UnitTestHelpers.Tests
     public interface IPropertyChanges<out T> : IEnumerable<T>
     {
         WaitHandle WaitForChange();
-        WaitHandle WaitFor(Func<T, bool> predicate);
+        WaitHandle WaitFor( Func<T, bool> predicate );
     }
 }

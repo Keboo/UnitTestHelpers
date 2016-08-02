@@ -12,7 +12,7 @@ namespace UnitTestHelpers.Tests
     public class PropertyChangedTests
     {
         [TestMethod]
-        public async Task WatchIsLoading()
+        public async Task IsLoadingIsSetWhileLoadingData()
         {
             //Arrange
             var dataService = new Mock<IDataService>();
